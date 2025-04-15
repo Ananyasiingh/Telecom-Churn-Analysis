@@ -1,3 +1,4 @@
+import os
 import pickle
 import pandas as pd
 import streamlit as st
@@ -39,7 +40,7 @@ ins = {"DSL": 1, "Fiber optic": 2, "No": 0}[InternetService]
 
 # Online Security input
 OnlineSecurity = st.selectbox("Online Security", ["Yes", "No", "No internet service"])
-os = {"Yes": 1, "No": 0, "No internet service": -1}[OnlineSecurity]
+os1 = {"Yes": 1, "No": 0, "No internet service": -1}[OnlineSecurity]
 
 # Online Backup input
 OnlineBackup = st.selectbox("Online Backup", ["Yes", "No", "No internet service"])
@@ -98,7 +99,7 @@ def features():
             "PhoneService": [ps],
             "MultipleLines": [ml],
             "InternetService": [ins],
-            "OnlineSecurity": [os],
+            "OnlineSecurity": [os1],
             "OnlineBackup": [ob],
             "DeviceProtection": [dp],
             "TechSupport": [ts],
@@ -126,3 +127,7 @@ if st.button("Predict"):
         st.header(f"Churn Prediction: {'Yes' if prediction[0] else 'No'}")
     except Exception as e:
         st.error(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    os.system(f"streamlit run app.py --server.port {port} --server.address 0.0.0.0")
